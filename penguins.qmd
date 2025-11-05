@@ -28,10 +28,23 @@ penguins$date <- as.Date(penguins$date_egg, format = "%m/%d/%y")
 p1 <- ggplot(penguins, aes(x = date, y = body_mass_g, fill = island))+
   geom_point() + 
   labs(
-    x = "date",
-    y = "Penguin Weight(g)")
+    x = "Date",
+    y = "Penguin Weight(g)",
+    title = "Penguin Size Timeline")
   
 ggplotly(p1)
+```
+
+```{r}
+p2 <- ggplot(penguins, aes(x = species, y = flipper_length_mm)) + 
+  geom_boxplot(fill = "#2373a1")+ 
+  coord_flip() + 
+  labs( 
+    x = "Flipper Length" ,
+    y = "Species",
+    title = "Flipper length by species")
+
+ggplotly(p2)
 ```
 
 ### Row3
