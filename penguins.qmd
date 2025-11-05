@@ -1,0 +1,44 @@
+---
+title: "Palmer Penguins Dashboard"
+author: "Calvin Small"
+format: 
+  dashboard:
+    orientation: columns 
+---
+
+```{r, warning= FALSE, echo = FALSE}
+
+library(tidyverse)
+library(plotly)
+library(janitor)
+
+penguins <- read_csv("data/penguins_lter.csv")
+
+penguins <- penguins %>% 
+  clean_names("snake")
+```
+
+## Page 1
+
+### Row2
+
+```{r, warning= FALSE}
+penguins$date <- as.Date(penguins$date_egg, format = "%m/%d/%y")
+
+p1 <- ggplot(penguins, aes(x = date, y = body_mass_g, fill = island))+
+  geom_point() + 
+  labs(
+    x = "date",
+    y = "Penguin Weight(g)")
+  
+ggplotly(p1)
+```
+
+### Row3
+
+```{r, warning=FALSE}
+penguins_small <- penguins %>% 
+  select(study_name, species,region, island, date_egg, culmen_depth_mm, culmen_length_mm, flipper_length_mm, body_mass_g, sex)
+
+knitr::kable(penguins_small)
+```

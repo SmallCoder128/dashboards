@@ -1,11 +1,52 @@
 ---
-title: "dashboards"
+title: "Star Wars Dashboard"
+author: "Calvin Small"
+format: 
+  dashboard: 
+    orientation: columns
 ---
 
-This is a Quarto website.
+```{r, echo = FALSE}
+library(tidyverse)
+library(plotly)
+```
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+# Page 1
+
+## Row 1
+
+```{r, warning - FALSE}
+p1 <- ggplot(starwars, aes(x = mass, y = height, text = name)) + 
+  geom_point()
+
+ggplotly(p1)
+```
+
+## Row 2 {,tabset}
 
 ```{r}
-1 + 1
+#| title: Bar Chart 
+ 
+p2 <-ggplot(starwars, aes(x = name, y = height)) + 
+  geom_bar(stat = 'identity') + 
+  theme(axis.title.x = element_text(angle = 45, vjust = .5, hjust = 2))
+ggplotly(p2)
+```
+
+```{r}
+#| title: Table
+
+starwars <- starwars %>% 
+  select(name, height, mass, gender, homeworld, species)
+
+knitr::kable(starwars)
+```
+
+# Page 2 
+
+## Row 1 
+
+```{r}
+ggplot(starwars, aes(x = mass, y = height)) + 
+  geom_point()
 ```

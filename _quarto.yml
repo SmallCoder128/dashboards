@@ -9,11 +9,12 @@ website:
       - href: index.qmd
         text: Home
       - about.qmd
+      - penguins.qmd
 
 format:
   html:
     theme:
-      - cosmo
+      - flatly
       - brand
     css: styles.css
     toc: true
