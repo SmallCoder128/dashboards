@@ -11,7 +11,7 @@ website:
       - about.qmd
       - penguins.qmd
       - icon: house
-        href: "https://smallcoder128.github.io/"
+        href: "https://smallcoder128.github.io"
 format:
   html:
     theme:
