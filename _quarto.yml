@@ -10,7 +10,8 @@ website:
         text: Home
       - about.qmd
       - penguins.qmd
-
+      - icon: house
+        href: "smallcoder128.github.io"
 format:
   html:
     theme:
