@@ -12,9 +12,6 @@ library(plotly)
 
 mydata <- read_csv("data/boardgame-geek-dataset_organized.csv")
 ```
-
-# Page 1
-
 ## Row 1
 
 ### Column1 {.tabset}
