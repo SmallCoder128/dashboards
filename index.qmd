@@ -1,5 +1,5 @@
 ---
-title: "Star Wars Dashboard"
+title: "Board Game Dashboard"
 author: "Calvin Small"
 format: 
   dashboard: 
@@ -9,44 +9,72 @@ format:
 ```{r, echo = FALSE}
 library(tidyverse)
 library(plotly)
+
+mydata <- read_csv("data/boardgame-geek-dataset_organized.csv")
 ```
 
 # Page 1
 
 ## Row 1
 
-```{r, warning - FALSE}
-p1 <- ggplot(starwars, aes(x = mass, y = height, text = name)) + 
-  geom_point()
+### Column1 {.tabset}
 
-ggplotly(p1)
+#### Complexity
+
+```{r, warning - FALSE}
+ggplot(mydata, aes(x= complexity, y = avg_rating)) +
+  geom_point(color = "#cc506d") +
+  geom_smooth(method = "lm", se = FALSE, color = "blue") + 
+  labs(
+    y = "Average Rating",
+    x = "Complexity",
+    title = "Rating Against Complexity Correlation" 
+  )
+```
+#### Price
+```{r}
+p3df <- mydata %>% 
+  select(amazon_price, avg_rating) %>% 
+  filter(amazon_price < 300)
+
+p3 <-ggplot(p3df, aes(x = amazon_price, y = avg_rating)) + 
+  geom_point(color = "#cc506d") +
+  geom_smooth(method = "lm", se = FALSE, color = "blue") + 
+  labs(
+    y = "Average Rating",
+    x = "Amazon Price",
+    title = "Rating Against Price Correlation" 
+  )
+
+ggplotly(p3)
 ```
 
-## Row 2 {,tabset}
+## Row 2
 
 ```{r}
 #| title: Bar Chart 
+
+mydata <- mydata %>% 
+  mutate(min_playtime_bin = cut(min_playtime, breaks=16,include.lowest = TRUE))
+
+p2df <- mydata %>% 
+  group_by(min_playtime_bin) %>% 
+  summarise(mean_rating = mean(avg_rating))
  
-p2 <-ggplot(starwars, aes(x = name, y = height)) + 
-  geom_bar(stat = 'identity') + 
-  theme(axis.title.x = element_text(angle = 45, vjust = .5, hjust = 2))
+p2 <-ggplot(p2df, aes(x = min_playtime_bin, y = mean_rating)) + 
+  geom_col(fill = "#cc506d") +
+  labs(title = "Average Rating by Playtime",
+       x = "Min Playtime",
+       y = "Rating")
+  
 ggplotly(p2)
 ```
 
 ```{r}
 #| title: Table
 
-starwars <- starwars %>% 
-  select(name, height, mass, gender, homeworld, species)
+mydata <- mydata %>% 
+  select(boardgame, release_year, max_players, min_playtime, avg_rating, complexity, amazon_price)
 
-knitr::kable(starwars)
-```
-
-# Page 2 
-
-## Row 1 
-
-```{r}
-ggplot(starwars, aes(x = mass, y = height)) + 
-  geom_point()
+knitr::kable(mydata)
 ```
