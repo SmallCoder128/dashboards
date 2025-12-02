@@ -12,6 +12,7 @@ library(plotly)
 
 mydata <- read_csv("data/boardgame-geek-dataset_organized.csv")
 ```
+
 A look at how the primary features of tabletop games correlate to ratings and overall game play. Complexity, Price and time to play are the major considerations when looking at correlation to rating. 
 
 ## Row 1
